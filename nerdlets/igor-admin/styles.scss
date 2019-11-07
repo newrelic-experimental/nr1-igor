@@ -1,0 +1,49 @@
+.col {
+  margin: 1em; 
+}
+
+.default-table {
+  width: 100%;
+  margin-top: 1em;
+
+  tr > td:last-of-type {
+    text-align: right;
+  }
+}
+
+.tab-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-column-gap: 2em;
+  margin: 1em;
+}
+
+$blue-gradient: linear-gradient(-50deg, rgb(189, 229, 208), rgb(18, 60, 108));
+$green-gradient: linear-gradient(-50deg, rgb(151, 199, 148), rgb(18, 101, 108));
+$red-gradient: linear-gradient(-50deg, rgb(165, 137, 176), rgb(211, 92, 92));
+$yellow-gradient: linear-gradient(-50deg, rgb(202, 162, 133), rgb(192, 191, 60));
+$blue2-gradient: linear-gradient(-50deg, rgb(128, 143, 182), rgb(55, 63, 82));
+$brown-gradient: linear-gradient(-50deg, rgb(187, 167, 147), rgb(166, 93, 61));
+$gray-gradient: linear-gradient(-50deg, rgb(175, 171, 178), rgb(105, 95, 100));
+
+.info-bar {
+  margin: 1em 0;
+  padding: 1em;
+  background: $blue-gradient;
+  color: #fff;
+  font-weight: bold;
+  display: flex;
+
+  .info-bar-icon {
+    flex: 0 0 auto;
+    margin-right: .5em;
+  }
+
+  .info-bar-text {
+    flex: 1 1 auto;
+  }
+}
+
+.form-element {
+  margin: 1em auto;
+}

@@ -1,0 +1,37 @@
+@import url('https://fonts.googleapis.com/css?family=Inconsolata|Montserrat:400,600&display=swap');
+@import '../../node_modules/mapbox-gl/dist/mapbox-gl.css';
+
+.container {
+  min-width: 100%;
+  min-height: 100%;
+}
+
+.tooltip {
+  background-color: #fff;
+  border-radius: 4px;
+  box-shadow: 0 1px 2px 0 rgba(153,153,153,0.35);
+  padding: 1em;
+  border: 1px solid #eee;
+  color: #2D2D36;
+  pointer-events: none;
+  display: grid;
+  font: 12px/18px Montserrat, sans-serif;
+}
+
+.cell {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font: 20px/30px Inconsolata, monospace;
+  color: #5A5A5A;
+}
+
+.chart-label {
+  font-family: Montserrat, sans-serif;
+  font-size: 0.3em;
+  text-anchor: middle;
+  -moz-transform: translateY(0.4em);
+  -ms-transform: translateY(0.4em);
+  -webkit-transform: translateY(0.4em);
+  transform: translateY(0.4em);
+}

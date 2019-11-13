@@ -14,7 +14,9 @@ import {
 } from 'nr1';
 
 import AccountPicker from './account-picker';
-import Donut from '../igor-detail/donut';
+import Detail from './detail';
+import Donut from './donut';
+import Modal from './modal';
 
 export default class Igor extends React.Component {
   static propTypes = {
@@ -41,12 +43,20 @@ export default class Igor extends React.Component {
     };
 
     this.loadData = this.loadData.bind(this);
+    this.setupQueries = this.setupQueries.bind(this);
     this.queryData = this.queryData.bind(this);
     this.openAdmin = this.openAdmin.bind(this);
     this.accountChange = this.accountChange.bind(this);
+    this.modalClose = this.modalClose.bind(this);
   }
 
   componentDidMount() {}
+
+  componentWillUnmount() {
+    const { queryTimer } = this.state;
+
+    if (queryTimer) clearInterval(queryTimer);
+  }
 
   openAdmin() {
     const { accountId } = this.state;
@@ -65,6 +75,12 @@ export default class Igor extends React.Component {
     }, () => this.loadData());
   }
 
+  modalClose() {
+    this.setState({
+      clickedObject: null
+    });
+  }
+
   async loadData() {
     const { accountId } = this.state;
 
@@ -79,16 +95,24 @@ export default class Igor extends React.Component {
       return a;
     }, {});
 
-    this.setState(o, () => (!('settings' in o) || !('data' in o)) ? this.openAdmin() : this.queryData());
+    this.setState(o, () => (!('settings' in o) || !('data' in o)) ? this.openAdmin() : this.setupQueries());
   }
 
-  async queryData() {
-    const { accountId, data } = this.state;
+  setupQueries() {
+    const { data } = this.state;
+
+    const nrql = `
+      SELECT
+        max(cpuPercent),
+        max(diskUsedPercent),
+        max((memoryUsedBytes/memoryTotalBytes)*100) AS 'max.memoryUsedPercent'
+      FROM SystemSample
+      SINCE 2 minutes ago`;
 
     const [queries, locs] = Object.keys(data).reduce((a, c, i) => {
       let loc = data[c];
       if ('attribute' in loc && 'values' in loc) {
-        a[0].push(`q${i}: nrql(query: "${this.nrql(loc.attribute, loc.values)}") {results}`);
+        a[0].push(`q${i}: nrql(query: "${nrql.replace(/\s\s+/g, ' ')} WHERE ${loc.attribute} IN ('${loc.values.join('\',\'')}')") {results}`);
         a[1][`q${i}`] = {
           coords: [loc.lng, loc.lat],
           name: c,
@@ -98,6 +122,21 @@ export default class Igor extends React.Component {
       }
       return a;
     }, [[], {}]);
+
+    this.setState({
+      queries: queries,
+      locs: locs,
+      queryTimer: setInterval(this.queryData, 60000)
+    }, () => this.queryData());
+  }
+
+  async queryData() {
+    const { querying, queryTimer, accountId, queries, locs } = this.state;
+    if (querying) return;
+
+    this.setState({
+      querying: true
+    });
 
     const gql = `{actor {account(id: ${accountId}) { ${queries.join(' ')} }}}`;
     const res = await NerdGraphQuery.query({query: gql});
@@ -118,17 +157,14 @@ export default class Igor extends React.Component {
       pickable: true,
       elevationScale: 100,
       getPosition: d => d.coords,
-      onHover: info => this.setState({
-        hoveredObject: info.object,
-        pointerX: info.x,
-        pointerY: info.y
+      onHover: o => this.setState({
+        pointerX: o.x,
+        pointerY: o.y,
+        hoveredIndex: o.index
       }),
-      onClick: info => navigation.openStackedNerdlet({
-        id: 'igor-detail',
-        urlState: {
-          clickedObject: info.object
-        }
-      })
+      onClick: o => this.setState({
+        clickedObject: o.object,
+      }),
     }
 
     const layers = [
@@ -156,13 +192,10 @@ export default class Igor extends React.Component {
     ];
 
     this.setState({
-      layers: layers
+      mapData: mapData,
+      layers: layers,
+      querying: false,
     });
-  }
-
-  nrql(attrib, locs) {
-    let _locs = `'` + locs.join(`','`) + `'`;
-    return `SELECT max(cpuPercent), max(diskUsedPercent), max((memoryUsedBytes/memoryTotalBytes)*100) AS 'max.memoryUsedPercent' FROM SystemSample WHERE ${attrib} IN (${_locs})`;
   }
 
   colorByPercent(pct, isString) {
@@ -176,7 +209,10 @@ export default class Igor extends React.Component {
   }
 
   render() {
-    const { settings, data, viewState, layers, hoveredObject, pointerX, pointerY } = this.state;
+    const { accountId, settings, data, viewState, mapData, layers, hoveredIndex, pointerX, pointerY, clickedObject } = this.state;
+    const { launcherUrlState } = this.props;
+
+    const hoveredObject = (hoveredIndex > -1) ? mapData[hoveredIndex] : null;
 
     return (
       <div className="container">
@@ -205,23 +241,33 @@ export default class Igor extends React.Component {
         {hoveredObject && (
           <div className="tooltip" style={{position: 'absolute', zIndex: 1, left: pointerX, top: pointerY}}>
             <div>Max Used Percent for <span style={{fontWeight: '600'}}>{hoveredObject.name}</span></div>
-            <div style={{display: 'grid', gridTemplateColumns: 'repeat(3, 6em)'}}>
-              <div className="cell" style={{height: '3em'}}>
-                <Donut percent={this.percentFormatter(hoveredObject['max.cpuPercent'])} />
+            <div className="cells">
+              <div className="cell">
+                <div>
+                  <Donut percent={this.percentFormatter(hoveredObject['max.cpuPercent'])} />
+                </div>
+                <span>CPU</span>
               </div>
-              <div className="cell" style={{height: '3em'}}>
-                <Donut percent={this.percentFormatter(hoveredObject['max.memoryUsedPercent'])} />
+              <div className="cell">
+                <div>
+                  <Donut percent={this.percentFormatter(hoveredObject['max.memoryUsedPercent'])} />
+                </div>
+                <span>Memory</span>
               </div>
-              <div className="cell" style={{height: '3em'}}>
-                <Donut percent={this.percentFormatter(hoveredObject['max.diskUsedPercent'])} />
+              <div className="cell">
+                <div>
+                  <Donut percent={this.percentFormatter(hoveredObject['max.diskUsedPercent'])} />
+                </div>
+                <span>Disk</span>
               </div>
             </div>
-            <div style={{display: 'grid', gridTemplateColumns: 'repeat(3, 6em)'}}>
-              <div className="cell">CPU</div>
-              <div className="cell">Memory</div>
-              <div className="cell">Disk</div>
-            </div>
+
           </div>
+        )}
+        {clickedObject && (
+          <Modal onClose={this.modalClose}>
+            <Detail accountId={accountId} clickedObject={clickedObject} launcherUrlState={launcherUrlState} />
+          </Modal>
         )}
       </div>
     );

@@ -123,12 +123,12 @@ export default class Mappings extends React.Component {
     const { attribute, attributes, values, selectedValues, selectedLocation, searchText } = this.state;
     const { data } = this.props;
 
-    return (
+    return (data) ? (
       <div className="cols bound">
         <div className="col">
           <table className="split">
             <tbody>
-              {data && Object.keys(data).map((loc,i) => (
+              {Object.keys(data).map((loc,i) => (
                 <tr key={i} onClick={() => this.changeLocation(loc)}>
                   <td style={(selectedLocation && (selectedLocation === loc)) ? {backgroundColor: 'transparent'} : {}}>
                     <div>
@@ -198,6 +198,6 @@ export default class Mappings extends React.Component {
           </div>
         }
       </div>
-    );
+    ) : <div style={{font: '1.5em Inconsolata, monospace'}}>No location(s). Add location(s) first.</div>;
   }
 }

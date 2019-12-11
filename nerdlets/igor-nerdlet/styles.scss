@@ -5,6 +5,27 @@
   min-width: 100%;
   min-height: 100%;
 
+  .intro {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    overflow: auto;
+    font: 2em/2em Montserrat, sans-serif;
+
+    div {
+      text-align: center;
+    }
+
+    h1 {
+      font: 600 2.1em/1.5em Montserrat, sans-serif;
+    }
+  }
+
   .panel {
     z-index: 1;
     position: absolute;

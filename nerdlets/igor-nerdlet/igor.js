@@ -8,6 +8,7 @@ import { ColumnLayer } from '@deck.gl/layers';
 
 import {
   navigation,
+  Icon,
   Button,
   AccountStorageQuery,
   NerdGraphQuery,
@@ -89,7 +90,8 @@ export default class Igor extends React.Component {
       return a;
     }, {});
 
-    this.setState(o, () => (!('settings' in o) || !('data' in o)) ? this.openAdmin() : this.setupQueries());
+    //this.setState(o, () => (!('settings' in o) || !('data' in o)) ? this.openAdmin() : this.setupQueries());
+    this.setState(o, () => ('settings' in o && 'data' in o) ? this.setupQueries() : null)
   }
 
   setupQueries() {
@@ -219,6 +221,15 @@ export default class Igor extends React.Component {
 
     return (
       <div className="container">
+        {(!settings || !('mapboxAccessToken' in settings)) &&
+          <div className="intro">
+            <div>
+              <h1>Welcome to I.G.O.R. - Infra Geo Ops Reporter!</h1>
+              In order to use IGOR you need to set it up.<br/>
+              Click on the <Icon type={Icon.TYPE.INTERFACE__OPERATIONS__CONFIGURE} style={{margin: '.1em'}} /> button on the top right, to get started.
+            </div>
+          </div>
+        }
         <div className="panel">
           <div>
             <AccountPicker onChange={this.accountChange} />

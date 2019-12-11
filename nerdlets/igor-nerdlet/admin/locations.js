@@ -43,7 +43,7 @@ export default class Locations extends React.Component {
       if (loc.length === 3) {
         let name = loc.shift().trim();
         let [lat, lng] = loc.map(parseFloat);
-        if (!(name in data) && lat && lng) {
+        if (!(name in (data || {})) && lat && lng) {
           a[name] = {lat, lng};
         } else {
           parseErrors.push(l);
@@ -142,31 +142,33 @@ export default class Locations extends React.Component {
           </div>
         </div>
         <div className="col">
-          <table className="admin">
-            {/*<caption>Locations</caption>*/}
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th colSpan="2">Lat/Lng</th>
-              </tr>
-            </thead>
-            <tbody>
-              {data && Object.keys(data).map((loc,i) => (
-                <tr key={i}>
-                  <td>{loc}</td>
-                  <td>{'' + data[loc]['lat'] + ', ' + data[loc]['lng']}</td>
-                  <td>
-                    <Button
-                      type={Button.TYPE.DESTRUCTIVE}
-                      sizeType={Button.SIZE_TYPE.SMALL}
-                      iconType={Button.ICON_TYPE.INTERFACE__SIGN__CLOSE}
-                      onClick={() => this.removeLocation(loc)}
-                    />
-                  </td>
+          {data &&
+            <table className="admin">
+              {/*<caption>Locations</caption>*/}
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th colSpan="2">Lat/Lng</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {Object.keys(data).map((loc,i) => (
+                  <tr key={i}>
+                    <td>{loc}</td>
+                    <td>{'' + data[loc]['lat'] + ', ' + data[loc]['lng']}</td>
+                    <td>
+                      <Button
+                        type={Button.TYPE.DESTRUCTIVE}
+                        sizeType={Button.SIZE_TYPE.SMALL}
+                        iconType={Button.ICON_TYPE.INTERFACE__SIGN__CLOSE}
+                        onClick={() => this.removeLocation(loc)}
+                      />
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          }
         </div>
       </div>
     );

@@ -17,6 +17,7 @@ import AccountPicker from './account-picker';
 import Detail from './detail';
 import Donut from './donut';
 import Modal from './modal';
+import Admin from './admin/';
 
 export default class Igor extends React.Component {
   static propTypes = {
@@ -40,33 +41,25 @@ export default class Igor extends React.Component {
         bearing: 0
       },
       layers: [],
+      showAdmin: false,
     };
 
     this.loadData = this.loadData.bind(this);
     this.setupQueries = this.setupQueries.bind(this);
     this.queryData = this.queryData.bind(this);
     this.openAdmin = this.openAdmin.bind(this);
+    this.dataChanged = this.dataChanged.bind(this);
     this.accountChange = this.accountChange.bind(this);
     this.modalClose = this.modalClose.bind(this);
   }
 
-  componentDidMount() {}
-
   componentWillUnmount() {
     const { queryTimer } = this.state;
-
     if (queryTimer) clearInterval(queryTimer);
   }
 
   openAdmin() {
-    const { accountId } = this.state;
-
-    navigation.openStackedNerdlet({
-      id: 'igor-admin',
-      urlState: {
-        accountId: accountId
-      }
-    });
+    this.setState({showAdmin: true});
   }
 
   accountChange(account) {
@@ -77,7 +70,8 @@ export default class Igor extends React.Component {
 
   modalClose() {
     this.setState({
-      clickedObject: null
+      clickedObject: null,
+      showAdmin: false,
     });
   }
 
@@ -99,7 +93,7 @@ export default class Igor extends React.Component {
   }
 
   setupQueries() {
-    const { data } = this.state;
+    const { data, queryTimer } = this.state;
 
     const nrql = `
       SELECT
@@ -123,6 +117,8 @@ export default class Igor extends React.Component {
       return a;
     }, [[], {}]);
 
+    if (queryTimer) clearInterval(queryTimer);
+
     this.setState({
       queries: queries,
       locs: locs,
@@ -132,7 +128,8 @@ export default class Igor extends React.Component {
 
   async queryData() {
     const { querying, queryTimer, accountId, queries, locs } = this.state;
-    if (querying) return;
+
+    if (querying || !queries || !queries.length) return;
 
     this.setState({
       querying: true
@@ -198,6 +195,12 @@ export default class Igor extends React.Component {
     });
   }
 
+  dataChanged(type, data) {
+    let o = {};
+    o[type] = data;
+    this.setState(o, () => this.loadData());
+  }
+
   colorByPercent(pct, isString) {
     let r = pct>50 ? 255 : Math.floor((pct*2)*255/100);
     let g = pct<50 ? 255 : Math.floor(255-(pct*2-100)*255/100);
@@ -209,19 +212,18 @@ export default class Igor extends React.Component {
   }
 
   render() {
-    const { accountId, settings, data, viewState, mapData, layers, hoveredIndex, pointerX, pointerY, clickedObject } = this.state;
+    const { accountId, settings, data, viewState, mapData, layers, hoveredIndex, pointerX, pointerY, clickedObject, showAdmin } = this.state;
     const { launcherUrlState } = this.props;
 
     const hoveredObject = (hoveredIndex > -1) ? mapData[hoveredIndex] : null;
 
     return (
       <div className="container">
-        <div style={{zIndex: '1', position: 'absolute', padding: '1em'}}>
+        <div className="panel">
           <div>
             <AccountPicker onChange={this.accountChange} />
             <Button
               type={Button.TYPE.NORMAL}
-              sizeType={Button.SIZE_TYPE.SMALL}
               iconType={Button.ICON_TYPE.INTERFACE__OPERATIONS__CONFIGURE}
               onClick={this.openAdmin}
               style={{marginLeft: '.5em'}} />
@@ -267,6 +269,11 @@ export default class Igor extends React.Component {
         {clickedObject && (
           <Modal onClose={this.modalClose}>
             <Detail accountId={accountId} clickedObject={clickedObject} launcherUrlState={launcherUrlState} />
+          </Modal>
+        )}
+        {showAdmin && (
+          <Modal onClose={this.modalClose}>
+            <Admin accountId={accountId} settings={settings} data={data} onChange={this.dataChanged} />
           </Modal>
         )}
       </div>

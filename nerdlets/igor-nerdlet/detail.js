@@ -13,7 +13,7 @@ import {
 import Donut from './donut';
 import Table from './table';
 
-export default class IgorDetail extends React.Component {
+export default class Detail extends React.Component {
   static propTypes = {
     accountId: PropTypes.number,
     clickedObject: PropTypes.object,
@@ -108,7 +108,7 @@ export default class IgorDetail extends React.Component {
     const time = duration ? ({
         end: now,
         begin: now - duration
-    }) : { endTime, beginTime };
+    }) : { end, begin };
 
     this.fetchHost(host.id, time);
   }

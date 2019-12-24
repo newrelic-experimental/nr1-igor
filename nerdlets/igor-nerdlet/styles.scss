@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Inconsolata|Montserrat:400,600&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Inconsolata:400,700|Montserrat:400,600&display=swap');
 @import '../../node_modules/mapbox-gl/dist/mapbox-gl.css';
 
 .container {
@@ -15,14 +15,28 @@
     bottom: 0;
     right: 0;
     overflow: auto;
-    font: 2em/2em Montserrat, sans-serif;
+    font: 600 1.2em Montserrat, sans-serif;
 
-    div {
-      text-align: center;
+    & > div {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+
+      & > div:first-child {
+        padding-right: 2em;
+        align-self: end;
+      }
     }
 
     h1 {
-      font: 600 2.1em/1.5em Montserrat, sans-serif;
+      font: 700 5em/.75em Inconsolata, monospace;
+
+      .lead {
+        color: #000e0e;
+        background-image: -webkit-linear-gradient(92deg, #f35626, #feab3a);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        -webkit-animation: hue 10s infinite linear;
+      }
     }
   }
 
@@ -30,6 +44,15 @@
     z-index: 1;
     position: absolute;
     padding: 1em;
+  }
+}
+
+@-webkit-keyframes hue {
+  from {
+    -webkit-filter: hue-rotate(0deg);
+  }
+  to {
+    -webkit-filter: hue-rotate(-360deg);
   }
 }
 
@@ -264,10 +287,27 @@ table.meta {
 
   .col {
     margin: 1em;
+
+    .summary {
+      font: 1.2em Inconsolata, monospace;
+      color: #5A5A5A;
+      margin-bottom: 2em;
+
+      a {
+        background-color: #d0f0ff;
+      }
+
+      .title {
+        font-size: 1.5em;
+        text-transform: uppercase;
+        display: block;
+        margin-bottom: 0;
+      }
+    }
   }
 
   &.bound {
-    border: 1px solid #d5d7d7;
+    border: 1px solid #e3e4e4;
     border-radius: .5em;
     padding: 1em 0;
 
@@ -346,20 +386,6 @@ table.split {
   }
 }
 
-.checks {
-  input[type=checkbox] { display:none; }
-  input[type=checkbox] + label:before {
-    font-family: FontAwesome;
-    display: inline-block;
-  }
-
-  input[type=checkbox] + label:before { content: "*"; } /* unchecked icon */
-  input[type=checkbox] + label:before { letter-spacing: 10px; } /* space between checkbox and label */
-
-  input[type=checkbox]:checked + label:before { content: "\f046"; } /* checked icon */
-  input[type=checkbox]:checked + label:before { letter-spacing: 5px; } /* allow space for check mark */
-}
-
 .hosts {
   margin: 1em 0;
   list-style-type: none;
@@ -409,6 +435,7 @@ table.split {
   padding: 2em 1em 1em;
   border: 1px solid #e3e4e4;
   border-radius: .5em;
+  margin-bottom: 1em;
 
   label {
     background-color: #fff;

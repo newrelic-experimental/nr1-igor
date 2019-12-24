@@ -8,7 +8,7 @@
     "test": "exit 0"
   },
   "nr1": {
-    "uuid": "e9bf1b95-0f09-4e45-8c62-c1af44b1e7b4"
+    "uuid": "720cdc81-24e7-4b46-88db-b797100c01c7"
   },
   "dependencies": {
     "deck.gl": "^7.3.3",

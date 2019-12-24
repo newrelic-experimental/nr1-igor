@@ -90,7 +90,16 @@ export default class Igor extends React.Component {
       return a;
     }, {});
 
-    //this.setState(o, () => (!('settings' in o) || !('data' in o)) ? this.openAdmin() : this.setupQueries());
+    if ('settings' in o && 'mapDefaults' in o.settings) {
+      o.viewState = {
+        longitude: parseFloat(o.settings.mapDefaults.longitude) || -98.5556199,
+        latitude: parseFloat(o.settings.mapDefaults.latitude) || 39.8097343,
+        zoom: parseFloat(o.settings.mapDefaults.zoom) || 4,
+        pitch: parseFloat(o.settings.mapDefaults.pitch) || 60,
+        bearing: parseFloat(o.settings.mapDefaults.bearing) || 0
+      };
+    }
+
     this.setState(o, () => ('settings' in o && 'data' in o) ? this.setupQueries() : null)
   }
 
@@ -224,9 +233,18 @@ export default class Igor extends React.Component {
         {(!settings || !('mapboxAccessToken' in settings)) &&
           <div className="intro">
             <div>
-              <h1>Welcome to I.G.O.R. - Infra Geo Ops Reporter!</h1>
-              In order to use IGOR you need to set it up.<br/>
-              Click on the <Icon type={Icon.TYPE.INTERFACE__OPERATIONS__CONFIGURE} style={{margin: '.1em'}} /> button on the top right, to get started.
+              <div>
+                IGOR provides a geographic exploration of Infrastructure data.<br/><br/>
+                Click on the <Icon type={Icon.TYPE.INTERFACE__OPERATIONS__CONFIGURE} style={{margin: '.1em'}} /> button on the top left corner, to get started.
+              </div>
+              <div>
+                <h1>
+                  <span className="lead">I</span>nfra <br/>
+                  <span className="lead">G</span>eo <br/>
+                  <span className="lead">O</span>ps <br/>
+                  <span className="lead">R</span>eporter
+                </h1>
+              </div>
             </div>
           </div>
         }

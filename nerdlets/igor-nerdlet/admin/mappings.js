@@ -75,7 +75,7 @@ export default class Mappings extends React.Component {
 
     this.setState({
       searchText: '',
-      values: results.map(r => r.member),
+      values: (results.length) ? (results[0]['uniques.'+attrib] || []) : [],
     });
   }
 

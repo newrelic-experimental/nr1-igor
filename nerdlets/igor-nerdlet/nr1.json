@@ -1,6 +1,6 @@
 {
     "schemaType": "NERDLET",
     "id": "igor-nerdlet",
-    "description": "IGOR displays Infra stats on a map",
+    "description": "IGOR displays Infrastructure stats on a map",
     "displayName": "Infra Geo Ops Reporter"
 }

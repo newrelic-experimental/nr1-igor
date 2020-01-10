@@ -116,7 +116,7 @@ export default class Detail extends React.Component {
   }
 
   pickedHost(host) {
-    this.fetchHost(host.id);
+    if (host && 'id' in host) this.fetchHost(host.id);
   }
 
   async fetchHost(guid) {

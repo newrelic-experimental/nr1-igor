@@ -10,13 +10,13 @@ export default class Admin extends React.Component {
     accountId: PropTypes.number,
     settings: PropTypes.object,
     data: PropTypes.object,
-    onChange: PropTypes.func,
+    onChange: PropTypes.func
   };
 
   constructor(props) {
     super(props);
     this.state = {
-      currentTab: 1,
+      currentTab: 1
     };
 
     this.switchTab = this.switchTab.bind(this);
@@ -33,28 +33,50 @@ export default class Admin extends React.Component {
 
     return (
       <div>
-        {/*<h2 className="header">Admin</h2>*/}
+        {/* <h2 className="header">Admin</h2>*/}
         <div className="tabs">
           <ul className="tabs-links">
             <li className={currentTab === 1 ? 'active' : ''}>
-              <a href="#tab-1" className="u-unstyledLink" onClick={e => this.switchTab(e, 1)}>General Settings</a>
+              <a
+                href="#tab-1"
+                className="u-unstyledLink"
+                onClick={e => this.switchTab(e, 1)}
+              >
+                General Settings
+              </a>
             </li>
             <li className={currentTab === 2 ? 'active' : ''}>
-              <a href="#tab-2" className="u-unstyledLink" onClick={e => this.switchTab(e, 2)}>Add/Edit Locations</a>
+              <a
+                href="#tab-2"
+                className="u-unstyledLink"
+                onClick={e => this.switchTab(e, 2)}
+              >
+                Add/Edit Locations
+              </a>
             </li>
             <li className={currentTab === 3 ? 'active' : ''}>
-              <a href="#tab-3" className="u-unstyledLink" onClick={e => this.switchTab(e, 3)}>Hosts at Locations</a>
+              <a
+                href="#tab-3"
+                className="u-unstyledLink"
+                onClick={e => this.switchTab(e, 3)}
+              >
+                Hosts at Locations
+              </a>
             </li>
           </ul>
         </div>
         <div className="tabs-content">
-          <div id="tab-1" className={'' + (currentTab === 1 ? 'show' : '')}>
-            <Settings settings={settings} accountId={accountId} onChange={onChange} />
+          <div id="tab-1" className={`${currentTab === 1 ? 'show' : ''}`}>
+            <Settings
+              settings={settings}
+              accountId={accountId}
+              onChange={onChange}
+            />
           </div>
-          <div id="tab-2" className={'' + (currentTab === 2 ? 'show' : '')}>
+          <div id="tab-2" className={`${currentTab === 2 ? 'show' : ''}`}>
             <Locations data={data} accountId={accountId} onChange={onChange} />
           </div>
-          <div id="tab-3" className={'' + (currentTab === 3 ? 'show' : '')}>
+          <div id="tab-3" className={`${currentTab === 3 ? 'show' : ''}`}>
             <Mappings data={data} accountId={accountId} onChange={onChange} />
           </div>
         </div>

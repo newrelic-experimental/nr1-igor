@@ -1,23 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import {
-  Icon,
-  Button,
-  AccountStorageMutation,
-} from 'nr1';
+import { Icon, Button, AccountStorageMutation } from 'nr1';
 
 export default class Locations extends React.Component {
   static propTypes = {
     data: PropTypes.object,
     accountId: PropTypes.number,
-    onUpdate: PropTypes.func,
+    onChange: PropTypes.func
   };
 
   constructor(props) {
     super(props);
     this.state = {
-      locationsText: '',
+      locationsText: ''
     };
 
     this.textChange = this.textChange.bind(this);
@@ -28,7 +24,7 @@ export default class Locations extends React.Component {
 
   textChange(e) {
     this.setState({
-      locationsText: e.target.value,
+      locationsText: e.target.value
     });
   }
 
@@ -39,12 +35,12 @@ export default class Locations extends React.Component {
     const parseErrors = [];
 
     const locs = locationsText.split('\n').reduce((a, l) => {
-      let loc = l.split(',');
+      const loc = l.split(',');
       if (loc.length === 3) {
-        let name = loc.shift().trim();
-        let [lat, lng] = loc.map(parseFloat);
+        const name = loc.shift().trim();
+        const [lat, lng] = loc.map(parseFloat);
         if (!(name in (data || {})) && lat && lng) {
-          a[name] = {lat, lng};
+          a[name] = { lat, lng };
         } else {
           parseErrors.push(l);
         }
@@ -54,9 +50,12 @@ export default class Locations extends React.Component {
       return a;
     }, {});
 
-    this.setState({
-      parseErrors: parseErrors,
-    }, () => this.updateData(Object.assign((data || {}), locs)));
+    this.setState(
+      {
+        parseErrors: parseErrors
+      },
+      () => this.updateData(Object.assign(data || {}, locs))
+    );
   }
 
   removeLocation(loc) {
@@ -70,17 +69,20 @@ export default class Locations extends React.Component {
     const { accountId, onChange } = this.props;
 
     const res = await AccountStorageMutation.mutate({
-        accountId: accountId,
-        actionType: AccountStorageMutation.ACTION_TYPE.WRITE_DOCUMENT,
-        collection: 'IgorDB',
-        documentId: 'data',
-        document: data,
+      accountId: accountId,
+      actionType: AccountStorageMutation.ACTION_TYPE.WRITE_DOCUMENT,
+      collection: 'IgorDB',
+      documentId: 'data',
+      document: data
     });
 
     if (!('error' in res)) {
-      this.setState({
-        locationsText: ''
-      }, () => (onChange) ? onChange() : null);
+      this.setState(
+        {
+          locationsText: ''
+        },
+        () => (onChange ? onChange() : null)
+      );
     }
   }
 
@@ -95,7 +97,12 @@ export default class Locations extends React.Component {
       borderRadius: '.25em'
     };
 
-    const bullet = <Icon type={Icon.TYPE.INTERFACE__SIGN__MINUS} style={{marginRight: '.2em'}} />;
+    const bullet = (
+      <Icon
+        type={Icon.TYPE.INTERFACE__SIGN__MINUS}
+        style={{ marginRight: '.2em' }}
+      />
+    );
 
     const locationPlaceholder = `San Francisco,37.7913249,-122.3951599
       Atlanta,33.7869491,-84.3849318
@@ -106,17 +113,22 @@ export default class Locations extends React.Component {
       <div className="cols">
         <div className="col">
           <div className="field">
-            <label htmlFor="locations" className="label">Locations</label>
-            {parseErrors && (parseErrors.length > 0) &&
+            <label htmlFor="locations" className="label">
+              Locations
+            </label>
+            {parseErrors && parseErrors.length > 0 && (
               <div className="message fail">
-                Unable to parse the following lines:<br/>
+                Unable to parse the following lines:
+                <br />
                 {parseErrors.map((p, i) => (
-                  <span style={{marginLeft: '1em'}} key={i}>
-                    {bullet}{p}<br/>
+                  <span style={{ marginLeft: '1em' }} key={i}>
+                    {bullet}
+                    {p}
+                    <br />
                   </span>
                 ))}
               </div>
-            }
+            )}
             <textarea
               id="locations"
               rows="5"
@@ -124,27 +136,39 @@ export default class Locations extends React.Component {
               placeholder={locationPlaceholder}
               value={locationsText}
               onChange={this.textChange}
-              style={formStyle}/>
+              style={formStyle}
+            />
             <div className="hint">
-              {bullet}One location each line<br/>
-              {bullet}Each location has 3 values - <span className="pass">name, latitude, longitude</span><br/>
-              {bullet}Values should be in that order, comma-separated<br/>
-              {bullet}All <span className="fail">3 values</span> are <span className="fail">required</span> for each location<br/>
-              {bullet}Leading/trailing spaces are stripped out for each value<br/>
-              {bullet}<span className="pass">Name</span> is <span className="fail">case-sensitive</span>, and should be <span className="fail">unique</span>
+              {bullet}One location each line
+              <br />
+              {bullet}Each location has 3 values -{' '}
+              <span className="pass">name, latitude, longitude</span>
+              <br />
+              {bullet}Values should be in that order, comma-separated
+              <br />
+              {bullet}All <span className="fail">3 values</span> are{' '}
+              <span className="fail">required</span> for each location
+              <br />
+              {bullet}Leading/trailing spaces are stripped out for each value
+              <br />
+              {bullet}
+              <span className="pass">Name</span> is{' '}
+              <span className="fail">case-sensitive</span>, and should be{' '}
+              <span className="fail">unique</span>
             </div>
             <Button
               type={Button.TYPE.NORMAL}
               iconType={Button.ICON_TYPE.INTERFACE__SIGN__PLUS__V_ALTERNATE}
-              onClick={this.addLocations}>
+              onClick={this.addLocations}
+            >
               Add
             </Button>
           </div>
         </div>
         <div className="col">
-          {data &&
+          {data && (
             <table className="admin">
-              {/*<caption>Locations</caption>*/}
+              {/* <caption>Locations</caption>*/}
               <thead>
                 <tr>
                   <th>Name</th>
@@ -152,10 +176,10 @@ export default class Locations extends React.Component {
                 </tr>
               </thead>
               <tbody>
-                {Object.keys(data).map((loc,i) => (
+                {Object.keys(data).map((loc, i) => (
                   <tr key={i}>
                     <td>{loc}</td>
-                    <td>{'' + data[loc]['lat'] + ', ' + data[loc]['lng']}</td>
+                    <td>{`${data[loc].lat}, ${data[loc].lng}`}</td>
                     <td>
                       <Button
                         type={Button.TYPE.DESTRUCTIVE}
@@ -168,7 +192,7 @@ export default class Locations extends React.Component {
                 ))}
               </tbody>
             </table>
-          }
+          )}
         </div>
       </div>
     );

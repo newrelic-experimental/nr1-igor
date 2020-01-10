@@ -12,18 +12,12 @@ export default class Modal extends React.Component {
   };
 
   constructor(props) {
-    super(props)
+    super(props);
 
-    this.modalSize = {width: 0, height: 0};
+    this.modalSize = { width: 0, height: 0 };
     this.modalContent = React.createRef();
     this.handleClose = this.handleClose.bind(this);
-  };
-
-  componentDidMount() {}
-
-  componentDidUpdate() {}
-
-  componentWillUnmount() {}
+  }
 
   handleClose(e) {
     e.preventDefault();
@@ -42,8 +36,17 @@ export default class Modal extends React.Component {
 
     return (
       <div className="modal-window">
-        <div className="modal-content" ref={this.modalContent} style={modalContentStyle}>
-          <a href="#" onClick={this.handleClose}><Icon type={Icon.TYPE.INTERFACE__SIGN__TIMES} className="modal-close" /></a>
+        <div
+          className="modal-content"
+          ref={this.modalContent}
+          style={modalContentStyle}
+        >
+          <a href="#" onClick={this.handleClose}>
+            <Icon
+              type={Icon.TYPE.INTERFACE__SIGN__TIMES}
+              className="modal-close"
+            />
+          </a>
           {children}
         </div>
       </div>

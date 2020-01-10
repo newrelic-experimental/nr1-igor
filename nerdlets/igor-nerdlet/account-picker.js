@@ -5,7 +5,7 @@ import { Dropdown, DropdownItem, AccountsQuery } from 'nr1';
 
 export default class AccountPicker extends React.Component {
   static propTypes = {
-    onChange: PropTypes.func,
+    onChange: PropTypes.func
   };
 
   constructor(props) {
@@ -37,23 +37,28 @@ export default class AccountPicker extends React.Component {
   switchAccount(account) {
     const { onChange } = this.props;
 
-    this.setState({
-      account: account
-    }, () => ((onChange) ? onChange(account) : null))
+    this.setState(
+      {
+        account: account
+      },
+      () => (onChange ? onChange(account) : null)
+    );
   }
 
   render() {
     const { account, accounts } = this.state;
 
     return (
-      <div style={{display: 'inline-block'}}>
-        {accounts.length > 0 && <Dropdown title={(account) ? account.name : ''}>
-          {accounts.map(a => (
-            <DropdownItem key={a.id} onClick={() => this.switchAccount(a)}>
-              {a.name}
-            </DropdownItem>
-          ))}
-        </Dropdown>}
+      <div style={{ display: 'inline-block' }}>
+        {accounts.length > 0 && (
+          <Dropdown title={account ? account.name : ''}>
+            {accounts.map(a => (
+              <DropdownItem key={a.id} onClick={() => this.switchAccount(a)}>
+                {a.name}
+              </DropdownItem>
+            ))}
+          </Dropdown>
+        )}
       </div>
     );
   }

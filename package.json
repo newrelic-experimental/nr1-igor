@@ -1,7 +1,7 @@
 {
   "private": true,
-  "name": "igor",
-  "description": "Nerdpack igor",
+  "name": "nr1-igor",
+  "description": "Nerdpack Infra Geo Ops Reporter (IGOR)",
   "version": "0.2.0",
   "scripts": {
     "start": "nr1 nerdpack:serve",
@@ -11,6 +11,9 @@
   },
   "nr1": {
     "uuid": "720cdc81-24e7-4b46-88db-b797100c01c7"
+  },
+  "bugs": {
+    "email": "opensource+nr1-igor@newrelic.com"
   },
   "dependencies": {
     "deck.gl": "^7.3.3",

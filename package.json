@@ -1,14 +1,14 @@
 {
   "private": true,
   "name": "igor",
-  "description": "Nerdpack igor",
+  "description": "IGOR Nerdpack",
   "version": "0.2.0",
   "scripts": {
     "start": "nr1 nerdpack:serve",
     "test": "exit 0"
   },
   "nr1": {
-    "uuid": "720cdc81-24e7-4b46-88db-b797100c01c7"
+    "uuid": "f594b922-cca9-4f38-bba1-409a8c26e8b8"
   },
   "dependencies": {
     "deck.gl": "^7.3.3",

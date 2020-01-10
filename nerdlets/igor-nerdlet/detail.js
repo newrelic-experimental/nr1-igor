@@ -101,19 +101,10 @@ export default class Detail extends React.Component {
   }
 
   pickedHost(host) {
-    const { timeRange } = (this.props || {}).launcherUrlState || {};
-    const { end_time: end, begin_time: begin, duration } = timeRange;
-
-    const now = Date.now();
-    const time = duration ? ({
-        end: now,
-        begin: now - duration
-    }) : { end, begin };
-
-    this.fetchHost(host.id, time);
+    this.fetchHost(host.id);
   }
 
-  async fetchHost(guid, time) {
+  async fetchHost(guid) {
     const res = await EntityByGuidQuery.query({entityGuid: guid});
 
     const entities = ((res || {}).data || {}).entities || [];
@@ -214,12 +205,19 @@ export default class Detail extends React.Component {
                         <td>{entity.tags[e]}</td>
                       </tr>
                     ))}
+                    <tr>
+                      <td colSpan="2">
+                        <Link to={navigation.getOpenStackedEntityLocation(entity.guid)}>
+                          More...
+                        </Link>
+                      </td>
+                    </tr>
                     {relationships && relationships.map((r, i) => (
                       <tr key={'r' + i}>
                         <td colSpan="2">
                           <Link to={navigation.getOpenStackedEntityLocation(r.entityGuid)}>
                             {r.entityName}
-                          </Link>
+                          </Link> (application)
                         </td>
                       </tr>
                     ))}

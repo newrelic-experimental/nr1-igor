@@ -1,4 +1,6 @@
 
+![GitHub release (latest SemVer including pre-releases)](https://img.shields.io/github/v/release/newrelic/nr1-igor?include_prereleases&sort=semver) [![Snyk](https://snyk.io/test/github/newrelic/nr1-igor/badge.svg)](https://snyk.io/test/github/newrelic/nr1-igor)
+
 ## Usage
 
 IGOR (Infra Geo-Ops Reporter) overlays Infrastructure data over a map view within New Relic One.
@@ -105,7 +107,7 @@ We encourage you to bring your experiences and questions to the [Explorers Hub](
 
 New Relic hosts and moderates an online forum where customers can interact with New Relic employees as well as other customers to get help and share best practices. Like all official New Relic open source projects, there's a related community topic in the New Relic Explorers Hub. You can find this project's topic/threads here:
 
-https://discuss.newrelic.com/t/TODO_IGOR_SPECIFIC_URL
+https://discuss.newrelic.com/t/nr1-igor-infrastructure-map-nerdpack/91886
 
 ## Issues and enhancement requests
 

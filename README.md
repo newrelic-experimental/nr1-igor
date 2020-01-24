@@ -3,13 +3,13 @@
 
 ## Usage
 
-IGOR (Infra Geo-Ops Reporter) overlays Infrastructure data over a map view within New Relic One.
+IGOR (Infra Geo-Ops Reporter) overlays infrastructure data over a map view within New Relic One.
 
 ![IGOR Map Screenshot](screenshots/igor-screenshot-map.png)
 
 ![IGOR Detail Screenshot](screenshots/igor-screenshot-detail.png)
 
-IGOR plots the highest CPU, memory and disk usage for hosts at various locations on a map, offering a true 30,000 foot (or roundabout) view. It allows you to drill down into hosts at a location. Its near-realtime nature allows it to be used in a NOC setting.
+IGOR plots the highest CPU, memory, and disk usage for hosts at various locations on a map, offering a true 30,000 foot (or thereabouts) view. It allows you to drill down into hosts at a location. Its near-realtime nature allows it to be used in an NOC (network operations center) setting.
 
 IGOR only requires that your hosts are running New Relic Infrastructure agent on them. Configuration happens directly within the app, where you specify the list of locations, and the hosts at each location.
 
@@ -19,19 +19,17 @@ This project is distributed under the [Apache 2 license](LICENSE).
 
 ## What do you need to make this work?
 
-Required:
-
-- Host(s) running [New Relic Infrastructure agent](https://docs.newrelic.com/docs/infrastructure/new-relic-infrastructure/get-started/introduction-new-relic-infrastructure).
+One or more host running [New Relic Infrastructure agent](https://docs.newrelic.com/docs/infrastructure/new-relic-infrastructure/get-started/introduction-new-relic-infrastructure).
 
 ## Getting started
 
-1. First, ensure that you have [Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git) and [NPM](https://www.npmjs.com/get-npm) installed. If you're unsure whether you have one or both of them installed, run the following command(s) (If you have them installed these commands will return a version number, if not, the commands won't be recognized):
+1. Ensure that you have [Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git) and [NPM](https://www.npmjs.com/get-npm) installed. If you're unsure whether you have one or both of them installed, run the following command. (If you have them installed these commands will return a version number, if not, the commands won't be recognized.)
 ```bash
 git --version
 npm -v
 ```
-2. Next, install the [New Relic One CLI](https://one.newrelic.com/launcher/developer-center.launcher) by going to [this link](https://one.newrelic.com/launcher/developer-center.launcher) and following the instructions (5 minutes or less) to install and set up your New Relic development environment.
-3. Next, to clone this repository and run the code locally against your New Relic data, execute the following command:
+2. Install the [New Relic One CLI](https://one.newrelic.com/launcher/developer-center.launcher) by going to [this link](https://one.newrelic.com/launcher/developer-center.launcher) and following the instructions (5 minutes or less) to install and set up your New Relic development environment.
+3. Run the following command to clone this repository and run the code locally against your New Relic data:
 
 ```bash
 nr1 nerdpack:clone -r https://github.com/newrelic/nr1-igor.git
@@ -56,29 +54,29 @@ nr1 nerdpack:subscribe [-c [DEV|BETA|STABLE]] [--profile=your_profile_name]
 
 Visit [https://one.newrelic.com](https://one.newrelic.com), navigate to the Nerdpack, and :sparkles:
 
-## How to configure and use IGOR
+## Configure and use IGOR
 
-IGOR opens with a splash screen, featuring a dropdown with a list of accounts that you can switch between, and a button to open the admin panel.
+IGOR opens with a splash screen featuring a drop-down that lists accounts that you can switch between, and a button to open the admin panel.
 
 ![IGOR Map Screenshot](screenshots/igor-screenshot-splash.png)
 
-To setup IGOR, click the button with the gear icon to open up the admin panel.
+### Set up IGOR
+
+1. Select the gear icon to open the admin panel.
 
 ![IGOR Admin Panel Screenshot](screenshots/igor-screenshot-mapbox-token.png)
 
-IGOR uses Mapbox to display the map. In order to do so, IGOR requires a Mapbox Access Token. Click link for more on Mapbox Access Tokens.
+2. IGOR uses Mapbox to display the map. To do so, in **General Settings**, add your **Mapbox Access Token**. For more information, see the [Mapbox access tokens](https://docs.mapbox.com/help/glossary/access-token/) information. 
 
-https://docs.mapbox.com/help/glossary/access-token/
-
-Once an access token has been saved, the default map view can be modified.
+### Modify the default map view
 
 ![IGOR Map Defaults Screenshot](screenshots/igor-screenshot-map-defaults.png)
 
-Jump to the `Add/Edit Locations` tab to add locations on the map.
+1. Select the **Add/Edit Locations** tab to add locations on the map.
 
 ![IGOR Add Locations Screenshot](screenshots/igor-screenshot-add-locations.png)
 
-List the locations, one location per line, with the name, latitude and longitude specified as comma-separated values for each location. Here's a sample list of locations:
+2. List the locations, one location per line, with the name, latitude, and longitude specified as comma-separated values for each location. For example:
 
 ```
 San Francisco,37.7913249,-122.3951599
@@ -87,15 +85,15 @@ Portland,45.5221871,-122.6784799
 Phoenix,33.4485711,-112.0743242
 ```
 
-Once locations have been added, switch to the `Hosts at Locations` tab.
+3. After you add locations, switch to the **Hosts at Locations** tab.
 
 ![IGOR Add Hosts Screenshot](screenshots/igor-screenshot-add-hosts.png)
 
-Click on a location from the list, which brings up a lists of hosts reporting into New Relic Infrastructure. Check all hosts for each location.
+4. Click on a location to bring up a list of hosts reporting into New Relic Infrastructure. Check all hosts for each location.
 
 ![IGOR Select Hosts Screenshot](screenshots/igor-screenshot-select-hosts.png)
 
-One you have setup all locations, close the admin panel to view your map. :tada:
+5. After you have set up all the locations, close the admin panel to view your map. :tada:
 
 # Support
 
@@ -111,7 +109,7 @@ https://discuss.newrelic.com/t/nr1-igor-infrastructure-map-nerdpack/91886
 
 ## Issues and enhancement requests
 
-Issues and enhancement requests can be submitted in the [Issues tab of this repository](../../issues). Please search for and review the existing open issues before submitting a new issue.
+Submit issues and enhancement requests in the [Issues tab of this repository](../../issues). Please search for and review the existing open issues before submitting a new issue.
 
 # Contributing
 

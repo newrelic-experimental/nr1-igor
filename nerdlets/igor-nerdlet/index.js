@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
 import DeckGL, { MapController } from '@deck.gl/react';
 import {
@@ -357,10 +356,7 @@ export default class Igor extends React.Component {
         )}
         {clickedObject && (
           <Modal onClose={this.modalClose}>
-            <Detail
-              accountId={accountId}
-              clickedObject={clickedObject}
-            />
+            <Detail accountId={accountId} clickedObject={clickedObject} />
           </Modal>
         )}
         {showAdmin && (

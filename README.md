@@ -1,3 +1,5 @@
+[![Community Project header](https://github.com/newrelic/open-source-office/raw/master/examples/categories/images/Community_Project.png)](https://github.com/newrelic/open-source-office/blob/master/examples/categories/index.md#category-community-project)
+
 # IGOR (Infrastructure Geo-Ops Reporter)
 
 ![GitHub release (latest SemVer including pre-releases)](https://img.shields.io/github/v/release/newrelic/nr1-igor?include_prereleases&sort=semver) [![Snyk](https://snyk.io/test/github/newrelic/nr1-igor/badge.svg)](https://snyk.io/test/github/newrelic/nr1-igor)

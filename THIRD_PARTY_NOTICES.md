@@ -33,7 +33,7 @@ code, the source code can be found at [https://github.com/newrelic/nr1-igor](htt
 
 ### deck.gl
 
-This product includes source derived from [deck.gl](https://github.com/uber/deck.gl) ([v7.3.3](https://github.com/uber/deck.gl/tree/v7.3.3)), distributed under the [MIT License](https://github.com/uber/deck.gl/blob/v7.3.3/LICENSE):
+This product includes source derived from [deck.gl](https://github.com/uber/deck.gl) ([v7.3.15](https://github.com/uber/deck.gl/tree/v7.3.15)), distributed under the [MIT License](https://github.com/uber/deck.gl/blob/v7.3.15/LICENSE):
 
 ```
 Copyright (c) 2015 - 2017 Uber Technologies, Inc.
@@ -89,7 +89,7 @@ SOFTWARE.
 
 ### react-dom
 
-This product includes source derived from [react-dom](https://github.com/facebook/react) ([v16.11.0](https://github.com/facebook/react/tree/v16.11.0)), distributed under the [MIT License](https://github.com/facebook/react/blob/v16.11.0/LICENSE):
+This product includes source derived from [react-dom](https://github.com/facebook/react) ([v16.13.1](https://github.com/facebook/react/tree/v16.13.1)), distributed under the [MIT License](https://github.com/facebook/react/blob/v16.13.1/LICENSE):
 
 ```
 MIT License
@@ -118,7 +118,7 @@ SOFTWARE.
 
 ### react-map-gl
 
-This product includes source derived from [react-map-gl](https://github.com/uber/react-map-gl) ([v5.0.12](https://github.com/uber/react-map-gl/tree/v5.0.12)), distributed under the [MIT License](https://github.com/uber/react-map-gl/blob/v5.0.12/LICENSE):
+This product includes source derived from [react-map-gl](https://github.com/uber/react-map-gl) ([v5.2.3](https://github.com/uber/react-map-gl/tree/v5.2.3)), distributed under the [MIT License](https://github.com/uber/react-map-gl/blob/v5.2.3/LICENSE):
 
 ```
 Copyright (c) 2015 Uber Technologies, Inc.
@@ -185,7 +185,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 
 ### react
 
-This product includes source derived from [react](https://github.com/facebook/react) ([v16.11.0](https://github.com/facebook/react/tree/v16.11.0)), distributed under the [MIT License](https://github.com/facebook/react/blob/v16.11.0/LICENSE):
+This product includes source derived from [react](https://github.com/facebook/react) ([v16.13.1](https://github.com/facebook/react/tree/v16.13.1)), distributed under the [MIT License](https://github.com/facebook/react/blob/v16.13.1/LICENSE):
 
 ```
 MIT License
